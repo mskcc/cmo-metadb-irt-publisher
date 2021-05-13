@@ -1,1 +1,1 @@
-# cmo-metadb-project-tracker-gateway
+# cmo-metadb-request-tracker-publisher

@@ -1,1 +1,1 @@
-# cmo-metadb-request-tracker-publisher
+# cmo-metadb-irt-publisher

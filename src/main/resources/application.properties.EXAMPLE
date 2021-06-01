@@ -1,0 +1,34 @@
+# default properties
+spring.batch.initialize-schema=always
+spring.batch.job.enabled=false
+chunk.interval=10
+async.thread_pool_size=5
+async.thread_pool_max=10
+processor.thread_pool_size=5
+processor.thread_pool_max=10
+
+# client-specific topics to listen or publish on
+irt.publisher_topic=
+
+# nats connection properties
+nats.consumer_name=
+nats.consumer_password=
+nats.url=
+nats.filter_subject=
+
+# nats tls properties 
+nats.tls_channel=
+nats.keystore_path=
+nats.truststore_path=
+nats.key_password=
+nats.store_password=
+
+# request tracker connection properties
+irt.base_url=
+irt.username=
+irt.password=
+irt.request_list_endpoint=
+irt.request_info_endpoint=
+
+# metadb publishing failures filepath
+metadb.publishing_failures_filepath=

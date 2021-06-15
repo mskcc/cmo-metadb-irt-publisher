@@ -40,8 +40,11 @@ public class IRTPublisher {
     private static Options getOptions(String[] args) {
         Options options = new Options();
         options.addOption("h", "help", false, "shows this help document and quits.")
+            .addOption("c", "cmoRequestsOnly", false,
+                       "Request filter - cmoRequests only.")
             .addOption("d", "daysBack", true,
-                       "Request filter - requests completed d+1 days or earlier (not greater than 60).");
+                       "Request filter - requests completed d+1 days or earlier"
+                       + " (not greater than 60, default: 7).");
         return options;
     }
 
@@ -62,14 +65,20 @@ public class IRTPublisher {
         try {
             if (commandLine.hasOption("h")) {
                 help(options, 0);
-            } else if (commandLine.hasOption("d")) {
+            }
+            if (commandLine.hasOption("d")) {
                 Integer daysBack = Integer.parseInt(commandLine.getOptionValue("d"));
                 if (daysBack > 60) {
                     help(options, 1);
                 }
                 toReturn.addString("daysBack", String.valueOf(daysBack));
             } else {
-                help(options, 1);
+                toReturn.addString("daysBack", "7");
+            }
+            if (commandLine.hasOption("c")) {
+                toReturn.addString("cmoRequestsOnly", "true");
+            } else {
+                toReturn.addString("cmoRequestsOnly", "false");
             }
         } catch (Exception e) {
             help(options, 1);
@@ -88,7 +97,12 @@ public class IRTPublisher {
         SpringApplication app = new SpringApplication(IRTPublisher.class);
         ConfigurableApplicationContext ctx = app.run(args);
 
-        JobParametersBuilder builder = parseArgs(args);
+        JobParametersBuilder builder = null;
+        try {
+            builder = parseArgs(args);
+        } catch (Exception e) {
+            help(getOptions(args), 1);
+        }
         JobExecution jobExecution = launchIRTPublisherJob(ctx, builder);
         ExitStatus exitStatus = jobExecution.getExitStatus();
         if (exitStatus.equals(ExitStatus.COMPLETED)) {

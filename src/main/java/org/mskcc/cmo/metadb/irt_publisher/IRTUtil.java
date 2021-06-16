@@ -68,7 +68,7 @@ public class IRTUtil {
     /**
      * Calls into request tracker to get list of request ids.
      */
-    public List<String> getRequestIds(String daysBack) throws Exception {
+    public List<String> getRequestIds(String daysBack, Boolean cmoRequestsOnly) throws Exception {
         String requestUrl = irtBaseUrl + irtRequestListEndpoint + daysBack;
         RestTemplate restTemplate = getRestTemplate();
         HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = getRequestEntity();
@@ -81,7 +81,15 @@ public class IRTUtil {
         List<Map> requestListMap = mapper.readValue(requestListJSON, List.class);
         List<String> requestIds = new ArrayList<>();
         for (Map m : requestListMap) {
-            requestIds.add((String) m.get("requestId"));
+            String requestId = (String)m.get("requestId");
+            if (cmoRequestsOnly) {
+                boolean cmoRequest = (Boolean)m.get("isCmoRequest");
+                if (!cmoRequest) {
+                    updateIRTErrors(requestId);
+                    continue;
+                }
+            }
+            requestIds.add(requestId);
         }
         return requestIds;
     }
@@ -116,7 +124,8 @@ public class IRTUtil {
             log.info("No errors to report during fetch from IRT");
         } else {
             StringBuilder builder =
-                new StringBuilder("The following request statuses could not be retrieved:\n");
+                new StringBuilder("The following request statuses could not"
+                                  + " be retrieved (or were filtered):\n");
             for (String requestId : irtErrors) {
                 builder.append(requestId).append("\n");
             }

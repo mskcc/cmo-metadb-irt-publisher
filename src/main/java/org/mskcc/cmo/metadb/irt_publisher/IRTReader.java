@@ -34,6 +34,9 @@ public class IRTReader implements ItemStreamReader<String> {
     @Value("#{jobParameters[daysBack]}")
     private String daysBack;
 
+    @Value("#{jobParameters[cmoRequestsOnly]}")
+    private Boolean cmoRequestsOnly;
+
     @Autowired
     private IRTUtil irtUtil;
 
@@ -43,7 +46,7 @@ public class IRTReader implements ItemStreamReader<String> {
     public void open(ExecutionContext ec) throws ItemStreamException {
         LOG.info("Fetching request ids from IRT going back: " + daysBack + " days.");
         try {
-            this.requestIdsList = irtUtil.getRequestIds(daysBack);
+            this.requestIdsList = irtUtil.getRequestIds(daysBack, cmoRequestsOnly);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

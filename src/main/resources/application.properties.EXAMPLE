@@ -15,6 +15,7 @@ nats.consumer_name=
 nats.consumer_password=
 nats.url=
 nats.filter_subject=
+nats.request_wait_time_in_seconds=
 
 # nats tls properties 
 nats.tls_channel=

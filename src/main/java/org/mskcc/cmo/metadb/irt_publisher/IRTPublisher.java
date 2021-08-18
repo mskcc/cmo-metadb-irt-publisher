@@ -44,7 +44,7 @@ public class IRTPublisher {
                        "Request filter - cmoRequests only.")
             .addOption("d", "daysBack", true,
                        "Request filter - requests completed d+1 days or earlier"
-                       + " (not greater than 60, default: 7).");
+                       + " (default: 7).");
         return options;
     }
 
@@ -68,9 +68,6 @@ public class IRTPublisher {
             }
             if (commandLine.hasOption("d")) {
                 Integer daysBack = Integer.parseInt(commandLine.getOptionValue("d"));
-                if (daysBack > 60) {
-                    help(options, 1);
-                }
                 toReturn.addString("daysBack", String.valueOf(daysBack));
             } else {
                 toReturn.addString("daysBack", "7");

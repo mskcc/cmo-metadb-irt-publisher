@@ -26,7 +26,6 @@ import java.util.concurrent.CompletableFuture;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -36,6 +35,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -55,6 +55,9 @@ public class IRTUtil {
 
     @Value("${irt.password}")
     private String irtPassword;
+
+    @Value("${irt.refresh_cache_endpoint}")
+    private String irtRefreshCacheEndpoint;
 
     @Value("${irt.request_list_endpoint}")
     private String irtRequestListEndpoint;
@@ -131,6 +134,23 @@ public class IRTUtil {
             }
             builder.deleteCharAt(builder.lastIndexOf("\n"));
             log.info(builder.toString());
+        }
+    }
+
+    /**
+     * Refreshes IRT request cache.
+     * @param daysBack
+     * @throws Exception
+     */
+    public void refreshCache(String daysBack) throws Exception {
+        String refreshCacheUrl = irtBaseUrl + irtRefreshCacheEndpoint + daysBack;
+        RestTemplate restTemplate = getRestTemplate();
+        HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = getRequestEntity();
+        ResponseEntity response = restTemplate.exchange(refreshCacheUrl, HttpMethod.GET,
+                requestEntity, Object.class);
+        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+            throw new RuntimeException("RefreshCache did not return expected status: "
+                    + response.getStatusCode());
         }
     }
 

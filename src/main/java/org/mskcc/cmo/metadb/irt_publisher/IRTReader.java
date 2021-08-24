@@ -44,6 +44,12 @@ public class IRTReader implements ItemStreamReader<String> {
 
     @Override
     public void open(ExecutionContext ec) throws ItemStreamException {
+        LOG.info("Refreshing cache from IRT going back: " + daysBack + " days.");
+        try {
+            irtUtil.refreshCache(daysBack);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
         LOG.info("Fetching request ids from IRT going back: " + daysBack + " days.");
         try {
             this.requestIdsList = irtUtil.getRequestIds(daysBack, cmoRequestsOnly);

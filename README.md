@@ -1,1 +1,1 @@
-# cmo-metadb-irt-publisher
+# SMILE IRT publisher

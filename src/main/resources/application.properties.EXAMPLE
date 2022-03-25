@@ -33,4 +33,4 @@ irt.request_info_endpoint=
 irt.refresh_cache_endpoint=
 
 # metadb publishing failures filepath
-metadb.publishing_failures_filepath=
+smile.publishing_failures_filepath=

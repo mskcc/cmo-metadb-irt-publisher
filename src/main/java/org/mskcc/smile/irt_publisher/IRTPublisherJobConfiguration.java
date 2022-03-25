@@ -13,7 +13,7 @@
  * Center has been advised of the possibility of such damage.
  */
 
-package org.mskcc.cmo.metadb.irt_publisher;
+package org.mskcc.smile.irt_publisher;
 
 import java.net.MalformedURLException;
 import java.util.Map;

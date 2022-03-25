@@ -13,7 +13,7 @@
  * Center has been advised of the possibility of such damage.
  */
 
-package org.mskcc.cmo.metadb.irt_publisher;
+package org.mskcc.smile.irt_publisher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.cert.X509Certificate;

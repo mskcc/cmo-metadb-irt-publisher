@@ -21,12 +21,12 @@
     <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
     <spring.version>5.2.6.RELEASE</spring.version>
     <jackson.version>2.11.2</jackson.version>
-    <!-- metadb messaging -->
-    <cmo_metadb_messaging_java.group>com.github.mskcc</cmo_metadb_messaging_java.group>
-    <cmo_metadb_messaging_java.version>1.2.2.RELEASE</cmo_metadb_messaging_java.version>
-    <!-- metadb common centralized config properties -->
-    <cmo_metadb_common.groupId>com.github.mskcc</cmo_metadb_common.groupId>
-    <cmo_metadb_common.version>1.2.2.RELEASE</cmo_metadb_common.version>
+    <!-- smile messaging library -->
+    <smile_messaging_java.group>com.github.mskcc</smile_messaging_java.group>
+    <smile_messaging_java.version>1.3.1.RELEASE</smile_messaging_java.version>
+    <!-- smile commons centralized config properties -->
+    <smile_commons.groupId>com.github.mskcc</smile_commons.groupId>
+    <smile_commons.version>1.3.1.RELEASE</smile_commons.version>
   </properties>
 
   <repositories>
@@ -44,11 +44,11 @@
   </pluginRepositories>
 
   <dependencies>
-    <!-- cmo mesaging library -->
+    <!-- smile mesaging library -->
     <dependency>
-      <groupId>${cmo_metadb_messaging_java.group}</groupId>
-      <artifactId>cmo-messaging-java</artifactId>
-      <version>${cmo_metadb_messaging_java.version}</version>
+      <groupId>${smile_messaging_java.group}</groupId>
+      <artifactId>smile-messaging-java</artifactId>
+      <version>${smile_messaging_java.version}</version>
     </dependency>
     <!-- spring boot and spring batch -->
     <dependency>
@@ -104,7 +104,7 @@
   </dependencies>
 
   <build>
-    <finalName>cmo_metadb_irt_publisher</finalName>
+    <finalName>smile_irt_publisher</finalName>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -126,9 +126,9 @@
         <version>3.1.1</version>
         <dependencies>
           <dependency>
-            <groupId>${cmo_metadb_common.groupId}</groupId>
-            <artifactId>cmo-metadb-common</artifactId>
-            <version>${cmo_metadb_common.version}</version>
+            <groupId>${smile_commons.groupId}</groupId>
+            <artifactId>smile-commons</artifactId>
+            <version>${smile_commons.version}</version>
           </dependency>
         </dependencies>
         <configuration>
